@@ -10,10 +10,10 @@ def new(request):
     context = {}
     if 'errors' in request.session:
         context = {
-                    'errors':request.session['errors'],
-                    'formdata':request.session['formdata'],
-                    }
-    return render(request,'inventory/new.html', context=context)
+            'errors':request.session['errors'],
+            'formdata':request.session['formdata'],
+        }
+    return render(request,'inventory/item.html', context=context)
 
 def create(request):
     (flag,data) = Item.objects.newItem(request.POST)
@@ -24,29 +24,28 @@ def create(request):
         return redirect('inventory:index')
     else:
         request.session['formdata'] = { 'edit': False,
-                                'name': request.POST['item'],
-                                'description': request.POST['description'],
-                                'price': request.POST['price'],
-                                }
+            'name': request.POST['item'],
+            'description': request.POST['description'],
+            'price': request.POST['price'],
+        }
         request.session['errors'] = data
         return redirect('inventory:new')
     return redirect('inventory:index')
 
 def show(request):
-    print "show()"
     return redirect('inventory:index')
 def edit(request,id):
     context = {}
     item = Item.objects.get(id=id)
 
     context = { 'edit': True,
-                'formdata':{ 'name':item.name,
-                             'description': item.description,
-                             'price': item.price,
-                             'id': item.id,
-                            },
-                }
-    return render(request,'inventory/new.html', context=context)
+        'formdata':{ 'name':item.name,
+            'description': item.description,
+            'price': item.price,
+            'id': item.id,
+        },
+    }
+    return render(request,'inventory/item.html', context=context)
 
 def update(request,id):
 
@@ -54,10 +53,10 @@ def update(request,id):
 
     if error == True:
         request.session['formdata'] = { 'edit': True,
-                                'name': request.POST['item'],
-                                'description': request.POST['description'],
-                                'price': request.POST['price'],
-                                }
+            'name': request.POST['item'],
+            'description': request.POST['description'],
+            'price': request.POST['price'],
+        }
         request.session['errors'] = data
         return redirect('inventory:new')
     else:
@@ -67,8 +66,6 @@ def update(request,id):
         return redirect('inventory:index')
     return redirect('inventory:index')
 def destroy(request,id):
-    print "destroy()", id
     toDelete = Item.objects.get(id=id)
-    print "Deleting",toDelete.name
     toDelete.delete()
     return redirect('inventory:index')

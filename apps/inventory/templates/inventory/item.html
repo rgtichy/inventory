@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class='container'>
-    {{formdata}} {{edit}}
     <h1>
       {% if edit == False %}
       Add Inventory Item
@@ -27,7 +26,7 @@
           <label class='col-md-2 text-right' for 'description'>Description:</label><input class='col-md-3' name='description' value='{{formdata.description}}' placeholder='Describe the Item.'/>
         </div>
         <div class='row'>
-          <label class='col-md-2 text-right' for 'price'>Price:</label><input class='col-md-1' type='number' name='price' value='{{formdata.price}}' placeholder='Price'/>
+          <label class='col-md-2 text-right' for 'price'>Price:</label><input class='col-md-1' type='number' name='price' step='0.0001' value='{{formdata.price}}' placeholder='Price'/>
         </div>
       </div>
       <a class='btn btn-primary' href="{% url 'inventory:index' %}">Cancel</a>
